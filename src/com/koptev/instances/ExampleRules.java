@@ -24,13 +24,15 @@ public class ExampleRules implements WebsiteConfiguration {
                 .setReviewsQuantitySelector("");
         ReviewParseSettings reviewSettings = new ReviewParseSettings()
                 .setAmountToParse(10) // or .setParseAll()
-                .setReviewPageSuffix("<pageNumber>") // must contain <pageNumber>
+                .setPageSuffix("<pageNumber>") // must contain <pageNumber>
                 .setReviewSelector("")
                 .setTitleSelector("")
                 .setNameSelector("")
                 .setRatingSelector("")
                 .setDateSelector("")
                 .setTextSelector("")
+                .setAdvantagesSelector("")
+                .setDisadvantagesSelector("")
                 .setLikesSelector("")
                 .setDislikesSelector("");
         CommentParseSettings commentSettings = new CommentParseSettings()

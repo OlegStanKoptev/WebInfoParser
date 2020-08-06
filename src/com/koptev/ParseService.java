@@ -95,10 +95,10 @@ public class ParseService {
         int amountToParse = 1;
         if (settings.getParseAll()) {
             amountToParse = overallReviews;
-        } else if (settings.getAmountToParse() != 0) {
+        } else if (settings.getAmountToParse() != 0 && settings.getAmountToParse() <= overallReviews) {
             amountToParse = settings.getAmountToParse();
         }
-        String suffix = settings.getReviewPageSuffix();
+        String suffix = settings.getPageSuffix();
         int savedReviews = 0;
         int currentPage = 1;
         var result = new ArrayList<ParseResultItem>();
@@ -112,6 +112,8 @@ public class ParseService {
                     int rating = 0;
                     String date = "";
                     String text = "";
+                    String advantages = "";
+                    String disadvantages = "";
                     int likes = 0;
                     int dislikes = 0;
                     try {
@@ -150,6 +152,20 @@ public class ParseService {
                         }
                     } catch (Exception ignored) { }
                     try {
+                        if (settings.getAdvantagesSelector() != null) {
+                            advantages = review.select(settings.getAdvantagesSelector()).first().text();
+                        } else if (settings.getCustomAdvantagesParse() != null) {
+                            advantages = settings.getCustomAdvantagesParse().Parse(review);
+                        }
+                    } catch (Exception ignored) { }
+                    try {
+                        if (settings.getDisadvantagesSelector() != null) {
+                            disadvantages = review.select(settings.getDisadvantagesSelector()).first().text();
+                        } else if (settings.getCustomDisadvantagesParse() != null) {
+                            disadvantages = settings.getCustomDisadvantagesParse().Parse(review);
+                        }
+                    } catch (Exception ignored) { }
+                    try {
                         if (settings.getLikesSelector() != null) {
                             likes = Integer.parseInt(review.select(settings.getLikesSelector()).text());
                         } else if (settings.getCustomLikesParse() != null) {
@@ -163,7 +179,7 @@ public class ParseService {
                             dislikes = Integer.parseInt(settings.getCustomDislikesParse().Parse(review));
                         }
                     } catch (Exception ignored) { }
-                    result.add(new Review(title, name, rating, date, text, likes, dislikes)
+                    result.add(new Review(title, name, rating, date, text, advantages, disadvantages, likes, dislikes)
                             .setComments(ParseComments(review, settingsPack))
                     );
                     savedReviews++;

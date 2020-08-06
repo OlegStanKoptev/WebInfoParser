@@ -12,17 +12,21 @@ public class Review implements ParseResultItem {
     private final int rating;
     private final String date;
     private final String text;
+    private final String advantages;
+    private final String disadvantages;
     private final int likes;
     private final int dislikes;
     private ParseResultList comments;
 
     // Constructor
-    public Review(String title, String name, int rating, String date, String text, int likes, int dislikes) {
+    public Review(String title, String name, int rating, String date, String text, String advantages, String disadvantages, int likes, int dislikes) {
         this.title = title;
         this.name = name;
         this.rating = rating;
         this.date = date;
         this.text = text;
+        this.advantages = advantages;
+        this.disadvantages = disadvantages;
         this.likes = likes;
         this.dislikes = dislikes;
         comments = new ParseResultList(new ArrayList<>());
@@ -34,6 +38,8 @@ public class Review implements ParseResultItem {
     public int getRating() { return rating; }
     public String getDate() { return date; }
     public String getText() { return text; }
+    public String getAdvantages() { return advantages; }
+    public String getDisadvantages() { return disadvantages; }
     public int getLikes() { return likes; }
     public int getDislikes() { return dislikes; }
     public Review setComments(ParseResultList comments) {
@@ -45,15 +51,12 @@ public class Review implements ParseResultItem {
     public ParseResultList getComments() { return comments; }
     @Override
     public String toString() {
-        StringBuilder output = new StringBuilder(String.format("TITLE: %s; NAME: %s; RATING: %s; DATE: %s; TEXT: %s; LIKES: %s; DISLIKES: %s; COMMENTS PARSED %s",
-                title.equals("") ? "NO TITLE" : title,
-                name,
-                rating / 100.0,
-                date,
-                text,
-                likes,
-                dislikes,
-                comments.size() + (comments.size() != 0 ? ":" : "")));
+        StringBuilder output = new StringBuilder(String.format("TITLE: %s; NAME: %s; RATING: %s; DATE: %s; TEXT: %s; ADVANTAGES: %s; DISADVANTAGES: %s; LIKES: %s; DISLIKES: %s; COMMENTS PARSED %s",
+                title.equals("") ? "NO TITLE" : title, name,
+                rating / 100.0, date,
+                text, advantages,
+                disadvantages, likes,
+                dislikes, comments.size() + (comments.size() != 0 ? ":" : "")));
         for (ParseResultItem item: comments) {
             output.append("\n\t").append(item.toString());
         }

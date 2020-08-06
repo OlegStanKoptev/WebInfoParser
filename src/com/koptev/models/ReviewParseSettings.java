@@ -5,11 +5,10 @@ import com.koptev.abstractions.ParseSettings;
 
 public class ReviewParseSettings implements ParseSettings {
     // Fields
-//    private String addressSuffix;
     private String reviewSelector;
     private int amountToParse;
     private boolean parseAll = false;
-    private String reviewPageSuffix;
+    private String pageSuffix;
 
     private String titleSelector;
     private CustomParseRule customTitleParse;
@@ -25,6 +24,12 @@ public class ReviewParseSettings implements ParseSettings {
 
     private String textSelector;
     private CustomParseRule customTextParse;
+
+    private String advantagesSelector;
+    private CustomParseRule customAdvantagesParse;
+
+    private String disadvantagesSelector;
+    private CustomParseRule customDisadvantagesParse;
 
     private String likesSelector;
     private CustomParseRule customLikesParse;
@@ -51,11 +56,11 @@ public class ReviewParseSettings implements ParseSettings {
     }
     public int getAmountToParse() { return amountToParse; }
 
-    public ReviewParseSettings setReviewPageSuffix(String suffix) {
-        reviewPageSuffix = suffix;
+    public ReviewParseSettings setPageSuffix(String suffix) {
+        pageSuffix = suffix;
         return this;
     }
-    public String getReviewPageSuffix() { return reviewPageSuffix; }
+    public String getPageSuffix() { return pageSuffix; }
 
     public ReviewParseSettings setTitleSelector(String selector) {
         titleSelector = selector;
@@ -111,6 +116,28 @@ public class ReviewParseSettings implements ParseSettings {
         return this;
     }
     public CustomParseRule getCustomTextParse() { return customTextParse; }
+
+    public ReviewParseSettings setAdvantagesSelector(String selector) {
+        advantagesSelector = selector;
+        return this;
+    }
+    public String getAdvantagesSelector() { return advantagesSelector; }
+    public ReviewParseSettings setCustomAdvantagesParse(CustomParseRule rule) {
+        customAdvantagesParse = rule;
+        return this;
+    }
+    public CustomParseRule getCustomAdvantagesParse() { return customAdvantagesParse; }
+
+    public ReviewParseSettings setDisadvantagesSelector(String selector) {
+        disadvantagesSelector = selector;
+        return this;
+    }
+    public String getDisadvantagesSelector() { return disadvantagesSelector; }
+    public ReviewParseSettings setCustomDisadvantagesParse(CustomParseRule rule) {
+        customDisadvantagesParse = rule;
+        return this;
+    }
+    public CustomParseRule getCustomDisadvantagesParse() { return customDisadvantagesParse; }
 
     public ReviewParseSettings setLikesSelector(String selector) {
         likesSelector = selector;

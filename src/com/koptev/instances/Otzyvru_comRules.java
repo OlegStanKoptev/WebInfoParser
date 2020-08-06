@@ -7,6 +7,8 @@ import com.koptev.models.CompanyParseSettings;
 import com.koptev.models.ParseSettingsPack;
 import com.koptev.models.ReviewParseSettings;
 
+import java.util.StringJoiner;
+
 public final class Otzyvru_comRules implements WebsiteConfiguration {
     // Fields
     private final ParseSettingsPack settingsPack;
@@ -23,8 +25,8 @@ public final class Otzyvru_comRules implements WebsiteConfiguration {
                 .setRatingSelector(".rtng_val")
                 .setReviewsQuantitySelector(".count");
         ReviewParseSettings reviewSettings = new ReviewParseSettings()
-                .setAmountToParse(10)
-                .setReviewPageSuffix("?page=<pageNumber>")
+                .setAmountToParse(30)
+                .setPageSuffix("?page=<pageNumber>")
                 .setReviewSelector(".commentbox")
                 .setTitleSelector("h2")
                 .setCustomNameParse((review) -> {
@@ -46,7 +48,23 @@ public final class Otzyvru_comRules implements WebsiteConfiguration {
                                 .select(".dtreviewed .value-title")
                                 .attr("title")
                 )
-                .setTextSelector(".description");
+                .setTextSelector(".description")
+                .setCustomAdvantagesParse((review) -> {
+                    var list = review.select(".advantages ol li");
+                    StringJoiner result = new StringJoiner(";");
+                    for (var item: list) {
+                        result.add(item.text());
+                    }
+                    return result.toString();
+                })
+                .setCustomDisadvantagesParse((review) -> {
+                    var list = review.select(".disadvantages ol li");
+                    StringJoiner result = new StringJoiner(";");
+                    for (var item: list) {
+                        result.add(item.text());
+                    }
+                    return result.toString();
+                });
         CommentParseSettings commentSettings = new CommentParseSettings()
                 .setCommentSelector(".comment_row:not(.comment_row:first-child)")
                 .setNameSelector(".author_name ins")
